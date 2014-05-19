@@ -124,13 +124,13 @@ case "$cmd" in
 		echo "uninstalling "
 		sh -c "$myremove $allopts"
 	;;
-	#search for a package, specifiy flags to search locally
+	#search for a package, specify flags to search locally
 	"search" | "-s")
-		if [ "$1" = "--local" -o "$1" = "-l" ]; then
+		if [ "$1" = "local" -o "$1" = "-l" ]; then
 			echo "searching locally installed packages for $lastarg"
 			sh -c "$mysearchlocal $lastarg"
 		else
-			echo "searching for packages"
+			echo "searching repos for packages"
 			sh -c "$mysearch $lastarg"
 		fi
 esac
