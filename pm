@@ -8,18 +8,22 @@ cmd=$1
 showHelp(){
 	echo "Usage:
 	pm {inst|rm|search} {package|file}
-	inst) installs a package or a file
-	rm) removes a package or a file and its dependencies
-	search) look for a specific package in your repos
-		optional: -l|--local) search for installed packages on your OS"
+	inst|install|-i) installs a package or a file
+	rm|remove|-r) removes a package or a file and its dependencies
+	search|-s) look for a specific package in your repos
+		optional: -l|local) search for installed packages on your OS"
 }
 
 if [ "$cmd" = "-h" ]; then showHelp; exit;fi
 
 
 #Check for a package name to work with if not updating
-if [ "$cmd" != "updt" -a "$cmd" != "update" -a "$cmd" != "-u" -a $# -lt 2 ];then
-	echo "Please specify a package or file, exiting..."
+if [ "$cmd" != "updt" -a "$cmd" != "update" -a "$cmd" != "-u" -a "$cmd" != "upgrd" -a "$cmd" != "upgrade" -a "$cmd" != "-U" ];then
+	needMoreOpts=1
+fi
+
+if [ $needMoreOpts -eq 1 -a $# -lt 2 ];then
+	echo "Please specify a command. See pm -h for more information, exiting..."
 	exit 1
 fi
 
@@ -27,6 +31,8 @@ fi
 #support install, remove, search(local+dbs), install bin file
 
 #Find a supported package manager
+
+#Look for apt/dpkg for Ubuntu/Debian/et all
 which apt-get > /dev/null 2>&1 
 if [ "$?" -eq 0 ];then 
 	echo "Using apt + dpkg"
@@ -34,6 +40,7 @@ if [ "$?" -eq 0 ];then
 	myremove="apt-get remove --purge && apt-get autoremove"
 	myremovefile="dpkg -r"
 	myupdate="apt-get update && apt-get upgrade"
+	myupgrade="apt-get update && apt-get dist-upgrade"
 	mysearch="apt-cache search"
 	mysearchlocal="apt-cache policy"
 	myinstallfile="dpkg -i"
@@ -45,12 +52,13 @@ else
 		myinstall="yum install"
 		myremove="yum remove"
 		myupdate="yum update"
+		myupgrade="yum distro-sync"
 		mysearch="yum search"
 		mysearchlocal="yum list installed|grep "
 		myinstallfile="$myinstall"
 else 
 	#else if find pacman, set tools
-	which pacman >/dev/null 2>&1
+	which pacman > /dev/null 2>&1
 	if [ "$?" -eq 0 ];then 
 		echo "pacman"
 		#if found the packer wrapper, include aur support
@@ -58,10 +66,12 @@ else
 		if [ "$?" -eq 0 ];then 
 			myinstall="packer -S"
 			myupdate="packer -Syyu"
+			myupgrade="packer -Syyu"
 			mysearch="packer -Ss"
 		else
 			myinstall="pacman -S"
 			myupdate="pacman -Syyu"
+			myupgrade="pacman -Syyu"
 			mysearch="pacman -Ss"
 		fi
 		myremove="pacman -Rsn"
@@ -88,11 +98,12 @@ lastarg=$i
 
 # Make sure only root can run our script
 if [ "$(id -u)" != "0" -a "$cmd" != "search" ]; then
-	pre="sudo "
-	myinstall="$pre$myinstall"
-	myremove="$pre$myremove"
-	myupdate="$pre$myupdate"
-	myinstallfile="$pre$myinstallfile"
+	pre="sudo"
+	myinstall="$pre $myinstall"
+	myremove="$pre $myremove"
+	myupdate="$pre $myupdate"
+	myupgrade="$pre $myupgrade"
+	myinstallfile="$pre $myinstallfile"
 fi
 
 
@@ -111,16 +122,16 @@ case "$cmd" in
 	;;
 	#update your packages
 	"updt" | "update" | "-u")
-		echo "starting full upgrade"
-		#echo "$myupdate"|grep "packer" > /dev/null 2>&1 
-		#if [ $lastarg = "-a" -a "$?" -eq 0 ]; then
-		#	sh -c "$myupdate $allopts"
-		#else
+		echo "starting full update"
 		sh -c "$myupdate $allopts"
-		#fi
+	;;
+	#upgrade your system 
+	"upgrd" | "upgrade" | "-U")
+		echo "starting full upgrade"
+		sh -c "$myupgrade $allopts"
 	;;
 	#uninstall a package
-	"rm" | "remove" | "-r")
+	"rm" | "remove" | "-R")
 		echo "uninstalling "
 		sh -c "$myremove $allopts"
 	;;
