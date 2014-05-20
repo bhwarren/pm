@@ -9,13 +9,14 @@ Wrapper for many package managers, with a simple interface
 - support apt/dpkg, yum, pacman/packer
 - support install (repo and local), remove (loal and repo), update, search (local and repo)
 
------ v1.1 --------
+----- v1.1 -------- (testing) 
 - add upgrade option with "-U" "upgrade" or "upgrd"
+- add update repos only option "-r" "repositories" or "repos"
 
 
 To-Do:
 - better parse commands so can combine -s & -l to search locally
-- add update repos only option "-r" "repositories" or "repos"
+- if searching local and no package specified, list all
 - add opensuse/zypper support
 - add gentoo/emerge support
 - follow up on DNF development

@@ -8,21 +8,31 @@ cmd=$1
 showHelp(){
 	echo "Usage:
 	pm {inst|rm|search} {package|file}
+	pm {update|upgrade}
+
 	inst|install|-i) installs a package or a file
 	rm|remove|-r) removes a package or a file and its dependencies
 	search|-s) look for a specific package in your repos
-		optional: -l|local) search for installed packages on your OS"
+		optional: -l|local) this option follows search, which looks for installed packages on your OS"
+	
+	
+	
+	
 }
 
 if [ "$cmd" = "-h" ]; then showHelp; exit;fi
 
+needMoreOpts=0
 
 #Check for a package name to work with if not updating
 if [ "$cmd" != "updt" -a "$cmd" != "update" -a "$cmd" != "-u" -a "$cmd" != "upgrd" -a "$cmd" != "upgrade" -a "$cmd" != "-U" ];then
-	needMoreOpts=1
+	needMoreOpts=$((needMoreOpts+1))
+fi
+if [ "$cmd" != "repos" -a "$cmd" != "repositories" -a "$cmd" != "-R" ];then
+	needMoreOpts=$((needMoreOpts+1))
 fi
 
-if [ $needMoreOpts -eq 1 -a $# -lt 2 ];then
+if [ $needMoreOpts -eq 2 -a $# -lt 2 ];then
 	echo "Please specify a command. See pm -h for more information, exiting..."
 	exit 1
 fi
@@ -41,6 +51,7 @@ if [ "$?" -eq 0 ];then
 	myremovefile="dpkg -r"
 	myupdate="apt-get update && apt-get upgrade"
 	myupgrade="apt-get update && apt-get dist-upgrade"
+	myrepos="apt-get update"
 	mysearch="apt-cache search"
 	mysearchlocal="apt-cache policy"
 	myinstallfile="dpkg -i"
@@ -53,6 +64,7 @@ else
 		myremove="yum remove"
 		myupdate="yum update"
 		myupgrade="yum distro-sync"
+		myrepos="yum clean expire-cache && yum check-update"
 		mysearch="yum search"
 		mysearchlocal="yum list installed|grep "
 		myinstallfile="$myinstall"
@@ -74,6 +86,7 @@ else
 			myupgrade="pacman -Syyu"
 			mysearch="pacman -Ss"
 		fi
+		myrepos="pacman -Sy"
 		myremove="pacman -Rsn"
 		mysearchlocal="pacman -Qs"
 		myinstallfile="pacman -U"
@@ -103,6 +116,7 @@ if [ "$(id -u)" != "0" -a "$cmd" != "search" ]; then
 	myremove="$pre $myremove"
 	myupdate="$pre $myupdate"
 	myupgrade="$pre $myupgrade"
+	myrepos="$pre $myrepos"
 	myinstallfile="$pre $myinstallfile"
 fi
 
@@ -129,6 +143,11 @@ case "$cmd" in
 	"upgrd" | "upgrade" | "-U")
 		echo "starting full upgrade"
 		sh -c "$myupgrade $allopts"
+	;;
+	#update the repositories 
+	"repos" | "repositories" | "-R")
+		echo "updating the repositories"
+		sh -c "$myrepos"
 	;;
 	#uninstall a package
 	"rm" | "remove" | "-R")
