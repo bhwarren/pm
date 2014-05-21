@@ -4,7 +4,7 @@ pm
 Wrapper for many package managers, with a simple interface
 
 
-v1
+v0.8
 - support simpler commands with -{char}, along with natural language, and shortented nl
 - support apt/dpkg, yum, pacman/packer
 - support install (repo and local), remove (loal and repo), update, search (local and repo)
