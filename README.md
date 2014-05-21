@@ -10,6 +10,7 @@ v0.8
 - support install (repo and local), remove (loal and repo), update, search (local and repo)
 
 
+
 To-Do:
 - better parse commands so can combine -s & -l to search locally
 - add update repos only option "-R" "repositories" or "repos"
