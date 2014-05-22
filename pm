@@ -130,7 +130,7 @@ case "$cmd" in
 		echo "Using $pkgMngr"
 
 		#check number of args
-		if [ $# -lt 2 ]; then 
+		if [ $# -lt 1 ]; then 
 			echo "please specify a package or file to install, exiting..."
 			exit 1
 		fi
@@ -175,7 +175,7 @@ case "$cmd" in
 		echo "Using $pkgMngr"
 
 		#check number of args
-		if [ $# -lt 2 ]; then 
+		if [ $# -lt 1 ]; then 
 			echo "please specify a package or file to remove, exiting..."
 			exit 1
 		fi
@@ -189,7 +189,7 @@ case "$cmd" in
 		echo "Using $pkgMngr"
 
 		#check number of args
-		if [ $# -lt 2 ]; then 
+		if [ $# -lt 1 ]; then 
 			echo "please specify a package or file to remove, exiting..."
 			exit 1
 		fi
