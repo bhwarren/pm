@@ -16,8 +16,8 @@ Wrapper for many package managers, with a simple interface
 - better parse commands so can combine -s & -l to search locally using getopts
 - if searching local and no package specified, list all
 
-
-*Ubuntu doesn't have a good command for searching local packages
+----- Known Annoyances -----
+- Ubuntu doesn't have a good command for searching local packages
 
 To-Do:
 - stop relying on which

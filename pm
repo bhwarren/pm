@@ -7,7 +7,9 @@ version="0.9"
 showHelp(){
 	echo "\
 INFO:
-	pm - package manager wrapper for apt+dpkg/yum/pacman. Written by Bo Warren.  Licensed under GPLv3 2014
+	pm - package manager wrapper for apt+dpkg/yum/pacman. 
+	Written by Bo Warren.  Licensed under GPLv3 2014
+
 USAGE:
 	pm {-i|-R} {package|file}
 	pm {-s|-sl} {package}
@@ -17,7 +19,8 @@ OPTIONS:
 	-i|--install)  Install a package or a file
 	-R|--remove)  Remove a package or a file and its dependencies
 	-s|--search)  Search for a specific package in your repos
-	-sl|--search-local)  Search installed packages on the OS.  If no package is specified, it lists all installed packages.
+	-sl|--search-local)  Search installed packages on the OS.  
+		If no package is specified, it lists all installed packages.
 	-u|--update) Update packages to newest version 
 	-r|--repositories)  Update the repository information only
 	-h|--help)  Show this message
@@ -33,7 +36,9 @@ EXAMPLES:
 # -U|--upgrade)  upgrades entire system (this will update to the newest version of your OS.  WARNING - EXPERIMENTAL. May cause breakages and system failure)
 
 if [ $# -eq 0  ];then
-	echo "Please specify a command. See $0 -h for help, exiting..."
+	echo "\
+Please specify a command. See 
+$0 -h for help, exiting..."
 	exit 1
 fi
 
@@ -218,5 +223,7 @@ case "$cmd" in
 	;;
 	#handle all other weird flags
 	*)
-		echo "Flag, $cmd, not supported. See $0 -h for help."
+		echo "\
+'$cmd' flag and multiple commands not supported. See 
+$0 -h for help."
 esac
