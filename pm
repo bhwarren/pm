@@ -207,7 +207,7 @@ case "$cmd" in
 	"--search-local" | "-sl")
 		echo "Using $pkgMngr"
 
-		if [ $# -gt 1 ];then
+		if [ $# -gt 0 ];then
 			echo "searching locally installed packages"
 			sh -c "$mysearchlocal $lastarg"
 		else
