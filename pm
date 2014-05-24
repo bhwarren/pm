@@ -103,9 +103,9 @@ else
 		fi
 		myrepos="pacman -Sy"
 		myremove="pacman -Rsn"
-		mysearchlocal="pacman -Qs"
 		myinstallfile="pacman -U"
 		mylistall="$mysearchlocal"
+		mysearchlocal(){ pacman -Qs $1; }
 	
 else
 	echo "Unable to find a supported package manager, exiting..."
