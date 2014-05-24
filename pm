@@ -61,11 +61,11 @@ if [ "$?" -eq 0 ];then
 	myinstallfile="dpkg -i"
 	mylistall="dpkg --get-selections"
 	mysearchlocal(){
-		apt-cache policy $1 | grep -i '(none)' > /dev/null 2>&1
+		apt-cache policy "$1" | grep -i '(none)' > /dev/null 2>&1
 		if [ "$?" -ne 0 ];then
-			apt-cache policy $1
-		else
-			echo "Package not installed."
+			apt-cache policy "$1"
+		#else
+		#	echo "Package not installed."
 		fi
 	}
 else 
@@ -79,9 +79,9 @@ else
 		myupgrade="yum distro-sync"
 		myrepos="yum clean expire-cache && yum check-update"
 		mysearch="yum search"
-		mysearchlocal="yum list installed|grep "
 		myinstallfile="$myinstall"
 		mylistall="yum list installed"
+		mysearchlocal(){ yum list installed|grep -i "$1"; }
 else 
 	#else if find pacman, set tools
 	which pacman > /dev/null 2>&1
@@ -105,7 +105,7 @@ else
 		myremove="pacman -Rsn"
 		myinstallfile="pacman -U"
 		mylistall="$mysearchlocal"
-		mysearchlocal(){ pacman -Qs $1; }
+		mysearchlocal(){ pacman -Qs "$1"; }
 	
 else
 	echo "Unable to find a supported package manager, exiting..."
