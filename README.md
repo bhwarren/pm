@@ -15,9 +15,7 @@ Wrapper for many package managers, with a simple interface
 - add update repos only option "-r" "repositories" or "repos"
 - better parse commands so can combine -s & -l to search locally using getopts
 - if searching local and no package specified, list all
-
------ Known Annoyances -----
-- Ubuntu doesn't have a good command for searching local packages
+- workaround for: Apt & Yum don't have a good command for searching local packages
 
 To-Do:
 - stop relying on which
