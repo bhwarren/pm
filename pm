@@ -16,15 +16,15 @@ USAGE:
 	pm {-u|-r}
 
 OPTIONS:
-	-i|--install)  Install a package or a file
-	-R|--remove)  Remove a package or a file and its dependencies
-	-s|--search)  Search for a specific package in your repos
-	-sl|--search-local)  Search installed packages on the OS.  
+	-i|install)  Install a package or a file
+	-R|remove)  Remove a package or a file and its dependencies
+	-s|search)  Search for a specific package in your repos
+	-sl|search-local)  Search installed packages on the OS.  
 		If no package is specified, it lists all installed packages.
-	-u|--update) Update packages to newest version 
-	-r|--repositories)  Update the repository information only
-	-h|--help)  Show this message
-	-v|--version)  Print script version
+	-u|update) Update packages to newest version 
+	-r|repositories)  Update the repository information only
+	-h|help)  Show this message
+	-v|version)  Print script version
 
 EXAMPLES:
 	pm -i vim gtk3 zsh 
@@ -139,7 +139,7 @@ fi
 #implement the actual actions
 case "$cmd" in
 	#install
-	"--install" | "-i")
+	"install" | "-i")
 		echo "Using $pkgMngr"
 
 		#check number of args
@@ -159,7 +159,7 @@ case "$cmd" in
 	;;
 
 	#update your packages
-	"--update" | "-u")
+	"update" | "-u")
 		echo "Using $pkgMngr"
 
 		echo "starting full update"
@@ -168,7 +168,7 @@ case "$cmd" in
 
 	#upgrade your system 
 	#experimental, may cause breakages
-	"--upgrade" | "-U")
+	"upgrade" | "-U")
 		echo "Using $pkgMngr"
 
 		echo "starting full upgrade"
@@ -176,7 +176,7 @@ case "$cmd" in
 	;;
 
 	#update the repositories 
-	"--repositories" | "-r")
+	"repositories" | "-r")
 		echo "Using $pkgMngr"
 
 		echo "updating the repositories"
@@ -184,7 +184,7 @@ case "$cmd" in
 	;;
 
 	#uninstall a package
-	"--remove" | "-R")
+	"remove" | "-R")
 		echo "Using $pkgMngr"
 
 		#check number of args
@@ -198,7 +198,7 @@ case "$cmd" in
 	;;
 
 	#search for a package in repos
-	"--search" | "-s")
+	"search" | "-s")
 		echo "Using $pkgMngr"
 
 		#check number of args
@@ -212,7 +212,7 @@ case "$cmd" in
 	;;
 
 	#search locally installed packages
-	"--search-local" | "-sl")
+	"search-local" | "-sl")
 		echo "Using $pkgMngr"
 
 		if [ $# -gt 0 ];then
@@ -224,10 +224,10 @@ case "$cmd" in
 			sh -c "$mylistall"
 		fi
 	;;
-	"--help" | "-h")  
+	"help" | "-h")  
 		showHelp
 	;;
-	"--version" | "-v")
+	"version" | "-v")
 		echo "pm - Version $version"
 	;;
 	#handle all other weird flags

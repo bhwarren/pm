@@ -1,7 +1,7 @@
 pm
 ==
 
-Wrapper for many package managers, with a simple interface
+Wrapper for many package managers, with a simple syntax 
 
 
 ----- v0.8 --------
@@ -22,3 +22,6 @@ To-Do:
 - add opensuse/zypper support
 - add gentoo/emerge support
 - follow up on DNF development
+
+
+References: The pacman rosetta at https://wiki.archlinux.org/index.php/Pacman_Rosetta
