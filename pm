@@ -58,9 +58,16 @@ if [ "$?" -eq 0 ];then
 	myupgrade="apt-get update && apt-get dist-upgrade"
 	myrepos="apt-get update"
 	mysearch="apt-cache search"
-	mysearchlocal="apt-cache policy"
 	myinstallfile="dpkg -i"
 	mylistall="dpkg --get-selections"
+	mysearchlocal(){
+		apt-cache policy $1 | grep -i '(none)' > /dev/null 2>&1
+		if [ "$?" -ne 0 ];then
+			apt-cache policy $1
+		else
+			echo "Package not installed."
+		fi
+	}
 else 
 	#else if find yum, set tools
 	which yum >/dev/null 2>&1
@@ -210,7 +217,8 @@ case "$cmd" in
 
 		if [ $# -gt 0 ];then
 			echo "searching locally installed packages"
-			sh -c "$mysearchlocal $lastarg"
+			#sh -c "$mysearchlocal $lastarg"
+			mysearchlocal $lastarg
 		else
 			echo "listing all installed packages"
 			sh -c "$mylistall"
