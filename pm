@@ -126,7 +126,7 @@ lastarg=$i
 
 
 # Make sure only root can run this script
-if [ "$(id -u)" != "0" -a "$cmd" != "search" ]; then
+if [ `id -u` -ne 0 ];then #-a "$cmd" != "search" ]; then
 	pre="sudo"
 	myinstall="$pre $myinstall"
 	myremove="$pre $myremove"
@@ -134,6 +134,7 @@ if [ "$(id -u)" != "0" -a "$cmd" != "search" ]; then
 	myupgrade="$pre $myupgrade"
 	myrepos="$pre $myrepos"
 	myinstallfile="$pre $myinstallfile"
+	mysearch="$pre $mysearch"
 fi
 
 #implement the actual actions
@@ -208,6 +209,7 @@ case "$cmd" in
 		fi
 
 		echo "searching repos"
+		echo "$mysearch"
 		sh -c "$mysearch $lastarg"
 	;;
 
