@@ -19,8 +19,8 @@ OPTIONS:
 	-i|install)  Install a package or a file
 	-R|remove)  Remove a package or a file and its dependencies
 	-s|search)  Search for a specific package in your repos
-	-sl|search-local)  Search installed packages on the OS.  
-		If no package is specified, it lists all installed packages.
+	-l|list) list all local packages
+		combining the 's' and 'l' flags searches installed packages   
 	-u|update) Update packages to newest version 
 	-r|repositories)  Update the repository information only
 	-h|help)  Show this message
@@ -214,7 +214,7 @@ case "$cmd" in
 	;;
 
 	#search locally installed packages
-	"search-local" | "-sl")
+	"-ls" | "-sl")
 		echo "Using $pkgMngr"
 
 		if [ $# -gt 0 ];then
@@ -222,9 +222,16 @@ case "$cmd" in
 			#sh -c "$mysearchlocal $lastarg"
 			mysearchlocal $lastarg
 		else
-			echo "listing all installed packages"
-			sh -c "$mylistall"
+			echo "please specify a package to search for"
+			exit
 		fi
+	;;
+	#list all
+	"list" | "-l")
+		echo "Using $pkgMngr"
+		echo "listing all installed packages"
+		sh -c "$mylistall"
+			
 	;;
 	"help" | "-h")  
 		showHelp
