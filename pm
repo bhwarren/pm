@@ -2,7 +2,7 @@
 
 #what you want to do (install, remove, etc)
 cmd=$1
-version="0.9"
+version="0.94"
 
 showHelp(){
 	echo "\
@@ -11,14 +11,15 @@ INFO:
 	Written by Bo Warren.  Licensed under GPLv3 2014
 
 USAGE:
-	pm {-i|-R} {package|file}
-	pm {-s|-sl} {package}
+	pm {-I|-R} {package|file}
+	pm {-s|-sl|-i} {package}
 	pm {-u|-r}
 
 OPTIONS:
-	-i|install)  Install a package or a file
+	-I|install)  Install a package or a file
 	-R|remove)  Remove a package or a file and its dependencies
 	-s|search)  Search for a specific package in your repos
+	-i|info)  get info about a certain package 
 	-l|list) list all local packages
 		combining the 's' and 'l' flags searches installed packages   
 	-u|update) Update packages to newest version 
@@ -27,7 +28,7 @@ OPTIONS:
 	-v|version)  Print script version
 
 EXAMPLES:
-	pm -i vim gtk3 zsh 
+	pm -I vim gtk3 zsh 
 	pm -u 
 	pm -R gedit"
 	
@@ -60,6 +61,7 @@ if [ "$?" -eq 0 ];then
 	mysearch="apt-cache search"
 	myinstallfile="dpkg -i"
 	mylistall="dpkg --get-selections"
+	myinfo="apt-cache show"
 	mysearchlocal(){
 		apt-cache policy "$1" | grep -i '(none)' > /dev/null 2>&1
 		if [ "$?" -ne 0 ];then
@@ -81,6 +83,7 @@ else
 		mysearch="yum search"
 		myinstallfile="$myinstall"
 		mylistall="yum list installed"
+		myinfo="yum info"
 		mysearchlocal(){ yum list installed|grep -i "$1"; }
 else 
 	#else if find pacman, set tools
@@ -105,6 +108,7 @@ else
 		myremove="pacman -Rsn"
 		myinstallfile="pacman -U"
 		mylistall="$mysearchlocal"
+		myinfo="pacman -Si"
 		mysearchlocal(){ pacman -Qs "$1"; }
 	
 else
@@ -140,7 +144,7 @@ fi
 #implement the actual actions
 case "$cmd" in
 	#install
-	"install" | "-i")
+	"install" | "-I")
 		echo "Using $pkgMngr"
 
 		#check number of args
@@ -169,12 +173,12 @@ case "$cmd" in
 
 	#upgrade your system 
 	#experimental, may cause breakages
-	"upgrade" | "-U")
-		echo "Using $pkgMngr"
-
-		echo "starting full upgrade"
-		sh -c "$myupgrade $allopts"
-	;;
+#	"upgrade" | "-U")
+#		echo "Using $pkgMngr"
+#
+#		echo "starting full upgrade"
+#		sh -c "$myupgrade $allopts"
+#	;;
 
 	#update the repositories 
 	"repositories" | "-r")
@@ -225,6 +229,18 @@ case "$cmd" in
 			echo "please specify a package to search for"
 			exit
 		fi
+	;;
+	"info" | "-i")
+		echo "Using $pkgMngr"
+
+		#check number of args
+		if [ $# -lt 1 ]; then 
+			echo "please specify a package to find info..."
+			exit 1
+		fi
+
+		echo "getting info about package $lastarg"
+		sh -c "$myinfo $lastarg"
 	;;
 	#list all
 	"list" | "-l")
