@@ -32,7 +32,9 @@ OPTIONS:
 EXAMPLES:
 	pm -I vim gtk3 zsh	#installs the vim, gtk3, and zsh packages
 	pm -U 			#updates all packages on the system
-	pm -R gedit gtk3	#removes the gedit and gtk3 packages" 	
+	pm -R gedit gtk3	#removes the gedit and gtk3 packages 	
+	pm -U --noconfirm	#use native package manager options (pacman)
+	pm -U -y		#use native package manager options (yum)"
 	
 }
 

@@ -3,6 +3,8 @@ pm
 
 Wrapper for many package managers, with a simple syntax 
 
+see pm -h for more information
+
 
 ----- v0.8 --------
 - first working version
