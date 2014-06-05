@@ -20,10 +20,10 @@ Wrapper for many package managers, with a simple syntax
 ----- v0.94 -------- (testing) 
 - added option to get info about a package
 - changed option for installing to capital, given info option and more importance 
+- changed update to capital, for importance
 
 
 To-Do:
-- consider changing update to capital
 - stop relying on which
 - add opensuse/zypper support
 - add gentoo/emerge support

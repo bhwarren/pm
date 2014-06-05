@@ -9,11 +9,13 @@ showHelp(){
 INFO:
 	pm - package manager wrapper for apt+dpkg/yum/pacman. 
 	Written by Bo Warren.  Licensed under GPLv3 2014
+	-I, -R, and -U are capitals because they actually
+	change the package database.
 
 USAGE:
 	pm {-I|-R} {package|file}
 	pm {-s|-sl|-i} {package}
-	pm {-u|-r}
+	pm {-U|-r}
 
 OPTIONS:
 	-I|install)  Install a package or a file
@@ -22,15 +24,15 @@ OPTIONS:
 	-i|info)  get info about a certain package 
 	-l|list) list all local packages
 		combining the 's' and 'l' flags searches installed packages   
-	-u|update) Update packages to newest version 
+	-U|update) Update packages to newest version 
 	-r|repositories)  Update the repository information only
 	-h|help)  Show this message
 	-v|version)  Print script version
 
 EXAMPLES:
-	pm -I vim gtk3 zsh 
-	pm -u 
-	pm -R gedit"
+	pm -I vim gtk3 zsh	#installs the vim, gtk3, and zsh packages
+	pm -U 			#updates all packages on the system
+	pm -R gedit gtk3	#removes the gedit and gtk3 packages" 	
 	
 }
 
@@ -164,7 +166,7 @@ case "$cmd" in
 	;;
 
 	#update your packages
-	"update" | "-u")
+	"update" | "-U")
 		echo "Using $pkgMngr"
 
 		echo "starting full update"
