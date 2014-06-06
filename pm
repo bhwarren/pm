@@ -10,7 +10,7 @@ INFO:
 	pm - package manager wrapper for apt+dpkg/yum/pacman. 
 	Written by Bo Warren.  Licensed under GPLv3 2014
 	-I, -R, and -U are capitals because they actually
-	change the package database.
+	change the package database. 
 
 USAGE:
 	pm {-I|-R} {package|file}
@@ -80,7 +80,7 @@ else
 	if [ "$?" -eq 0 ];then 
 		pkgMngr="Yum"
 		myinstall="yum install"
-		myremove="yum remove"
+		myremove="yum autoremove"
 		myupdate="yum update"
 		myupgrade="yum distro-sync"
 		myrepos="yum clean expire-cache && yum check-update"
