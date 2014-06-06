@@ -21,11 +21,11 @@ see pm -h for more information
 
 ----- v0.94 -------- (testing) 
 - added option to get info about a package
-- changed option for installing to capital, given info option and more importance 
-- changed update to capital, for importance
+- changed option for installing,removing,update to capital (more importance) 
 
 
 To-Do:
+- allow piping for remove/install (workaround using xargs before pm)
 - stop relying on which
 - add opensuse/zypper support
 - add gentoo/emerge support
