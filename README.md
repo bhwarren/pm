@@ -24,6 +24,9 @@ see pm -h for more information
 - changed option for installing to capital, given info option and more importance 
 - changed update to capital, for importance
 
+----- v1.0 ----------
+- release as stable (master branch)
+
 
 To-Do:
 - stop relying on which

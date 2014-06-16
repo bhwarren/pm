@@ -2,7 +2,7 @@
 
 #what you want to do (install, remove, etc)
 cmd=$1
-version="0.94"
+version="1.0"
 
 showHelp(){
 	echo "\
