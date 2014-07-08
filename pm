@@ -217,7 +217,6 @@ case "$cmd" in
 		fi
 
 		echo "searching repos"
-		echo "$mysearch"
 		sh -c "$mysearch $lastarg"
 	;;
 
