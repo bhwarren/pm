@@ -5,8 +5,8 @@ Wrapper for many package managers, with a simple syntax
 
 see pm -h for more information
 
-<<<<<<< HEAD
-v0.8
+
+v1.0
 =======
 
 ----- v0.8 --------
