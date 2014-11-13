@@ -124,7 +124,7 @@ else
                 myupdate="opkg upgrade"
                 myupgrade="Must manuall flash"
                 myrepos="opkg update"
-                mysearch="opkg search"
+                mysearch="opkg find"
                 myinstallfile="$myinstall"
                 mylistall="opkg list-installed"
                 myinfo="opkg info"
@@ -134,6 +134,7 @@ else
 else
 	echo "Unable to find a supported package manager, exiting..."
 	exit 2
+fi
 fi
 fi
 fi
