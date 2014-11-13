@@ -114,6 +114,22 @@ else
 		mylistall="$mysearchlocal"
 		myinfo="pacman -Si"
 		mysearchlocal(){ pacman -Qs "$1"; }
+else
+        #else if find yum, set tools
+        which opkg >/dev/null 2>&1
+        if [ "$?" -eq 0 ];then
+                pkgMngr="OPKG"
+                myinstall="opkg install"
+                myremove="opkg --autoremove"
+                myupdate="opkg upgrade"
+                myupgrade="Must manuall flash"
+                myrepos="opkg update"
+                mysearch="opkg search"
+                myinstallfile="$myinstall"
+                mylistall="opkg list-installed"
+                myinfo="opkg info"
+                mysearchlocal(){ opkg list-installed "$1"; }
+
 	
 else
 	echo "Unable to find a supported package manager, exiting..."
@@ -217,7 +233,6 @@ case "$cmd" in
 		fi
 
 		echo "searching repos"
-		echo "$mysearch"
 		sh -c "$mysearch $lastarg"
 	;;
 
