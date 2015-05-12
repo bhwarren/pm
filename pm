@@ -279,6 +279,6 @@ case "$cmd" in
 	#handle all other weird flags
 	*)
 		echo "\
-'$cmd' flag and multiple commands not supported. See 
+'$cmd' flag not supported. See 
 $0 -h for help."
 esac
