@@ -76,19 +76,30 @@ if [ "$?" -eq 0 ];then
 	}
 else 
 	#else if find yum, set tools
+	which dnf >/dev/null 2>&1
+	dnf_not_inst="$?"
+
+
 	which yum >/dev/null 2>&1
 	if [ "$?" -eq 0 ];then 
-		pkgMngr="Yum"
-		myinstall="yum install"
-		myremove="yum autoremove"
-		myupdate="yum update"
-		myupgrade="yum distro-sync"
-		myrepos="yum clean expire-cache && yum check-update"
-		mysearch="yum search"
+		pkgMngr="yum"
+
+	else if [ "$dnf_not_inst" -eq 0 ];then
+		pkgMngr="dnf"
+	fi
+	fi
+	
+	if [ ! $pkgMngr == "" ];then
+		myinstall="$pkgMngr install"
+		myremove="$pkgMngr autoremove"
+		myupdate="$pkgMngr update"
+		myupgrade="$pkgMngr distro-sync"
+		myrepos="$pkgMngr clean expire-cache && yum check-update"
+		mysearch="$pkgMngr search"
 		myinstallfile="$myinstall"
-		mylistall="yum list installed"
-		myinfo="yum info"
-		mysearchlocal(){ yum list installed|grep -i "$1"; }
+		mylistall="$pkgMngr list installed"
+		myinfo="$pkgMngr info"
+		mysearchlocal(){ $pkgMngr list installed|grep -i "$1"; }
 else 
 	#else if find pacman, set tools
 	which pacman > /dev/null 2>&1
