@@ -105,20 +105,10 @@ else
 	which pacman > /dev/null 2>&1
 	if [ "$?" -eq 0 ];then 
 		pkgMngr="Pacman"
-		#if found the packer wrapper, include aur support
-		which packer >/dev/null 2>&1
-		if [ "$?" -eq 0 ];then 
-			pkgMngr="Packer"
-			myinstall="packer -S"
-			myupdate="packer -Syyu"
-			myupgrade="packer -Syyu"
-			mysearch="packer -Ss"
-		else
-			myinstall="pacman -S"
-			myupdate="pacman -Syyu"
-			myupgrade="pacman -Syyu"
-			mysearch="pacman -Ss"
-		fi
+		myinstall="pacman -S"
+		myupdate="pacman -Syyu"
+		myupgrade="pacman -Syyu"
+		mysearch="pacman -Ss"
 		myrepos="pacman -Sy"
 		myremove="pacman -Rsn"
 		myinstallfile="pacman -U"
