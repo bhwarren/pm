@@ -15,6 +15,7 @@ v1.0
 - added preliminary dnf support
 - added preliminary emerge support
 - added preliminary zypper support
+- make search local faster for yum
 
 
 ----- v1.0 ----------
@@ -39,11 +40,10 @@ v1.0
 
 
 To-Do:
-- add opensuse/zypper support
-- add gentoo/emerge support
-- follow up on DNF development
 - add option for 'provides'
-- make search local faster for yum
+- add homebrew/macports support
+- bsd support
+- change search local to "-l"
 
 testing on latest: ubuntu, debian, fedora, opensuse, centos, arch, and gentoo
 

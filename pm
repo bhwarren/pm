@@ -134,7 +134,7 @@ else
                 mysearchlocal(){ rpm -qa "*$1*"; }
 
 else
-        #else if find yum, set tools
+        #else if find emerge, set tools
         which emerge >/dev/null 2>&1
         if [ "$?" -eq 0 ];then
                 pkgMngr="emerge"
