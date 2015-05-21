@@ -11,8 +11,11 @@ v1.0
 
 
 ----- v1.1 (testing) --------
-- remove packer support
+- remove packer support (causing too many bugs)
 - added preliminary dnf support
+- added preliminary emerge support
+- added preliminary zypper support
+- make search local faster for yum
 
 
 ----- v1.0 ----------
@@ -37,10 +40,11 @@ v1.0
 
 
 To-Do:
-- add opensuse/zypper support
-- add gentoo/emerge support
-- follow up on DNF development
 - add option for 'provides'
+- add homebrew/macports support
+- bsd support
+- change search local to "-l"
 
+testing on latest: ubuntu, debian, fedora, opensuse, centos, arch, and gentoo
 
 References: The pacman rosetta at https://wiki.archlinux.org/index.php/Pacman_Rosetta

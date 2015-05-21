@@ -89,7 +89,7 @@ else
 	fi
 	fi
 	
-	if [ ! $pkgMngr == "" ];then
+	if [ ! "$pkgMngr" == "" ];then
 		myinstall="$pkgMngr install"
 		myremove="$pkgMngr autoremove"
 		myupdate="$pkgMngr update"
@@ -99,7 +99,8 @@ else
 		myinstallfile="$myinstall"
 		mylistall="$pkgMngr list installed"
 		myinfo="$pkgMngr info"
-		mysearchlocal(){ $pkgMngr list installed|grep -i "$1"; }
+                mysearchlocal(){ rpm -qa "*$1*"; }
+
 else 
 	#else if find pacman, set tools
 	which pacman > /dev/null 2>&1
@@ -115,30 +116,45 @@ else
 		mylistall="$mysearchlocal"
 		myinfo="pacman -Si"
 		mysearchlocal(){ pacman -Qs "$1"; }
-else
-        #else if find yum, set tools
-        which opkg >/dev/null 2>&1
-        if [ "$?" -eq 0 ];then
-                pkgMngr="OPKG"
-                myinstall="opkg install"
-                myremove="opkg --autoremove"
-                myupdate="opkg upgrade"
-                myupgrade="Must manuall flash"
-                myrepos="opkg update"
-                mysearch="opkg find"
-                myinstallfile="$myinstall"
-                mylistall="opkg list-installed"
-                myinfo="opkg info"
-                mysearchlocal(){ opkg list-installed "$1"; }
 
-	
+else 
+        #else if find zypper, set tools
+        which zypper >/dev/null 2>&1
+        if [ "$?" -eq 0 ];then
+                pkgMngr="zypper"
+                myinstall="zypper install"
+                myremove="zypper rm -u"
+                myupdate="zypper update"
+                myupgrade="zypper dup"
+                myrepos="zypper refresh"
+                mysearch="zypper search"
+                myinstallfile="$myinstall"
+                mylistall="rpm -qa"
+                myinfo="zypper info"
+                mysearchlocal(){ rpm -qa "*$1*"; }
+
+else
+        #else if find emerge, set tools
+        which emerge >/dev/null 2>&1
+        if [ "$?" -eq 0 ];then
+                pkgMngr="emerge"
+                myinstall="emerge"
+                myremove="emerge --depclean"
+                myupdate="emerge -u world"
+                myupgrade="emerge -uDN world"
+                myrepos="layman -f"
+                mysearch="emerge -S"
+                myinstallfile="$myinstall"
+                mylistall="emerge -e world"
+                myinfo="emerge -S"
+                mysearchlocal(){ emerge -S "$1"; }
+
+
 else
 	echo "Unable to find a supported package manager, exiting..."
 	exit 2
-fi
-fi
-fi
-fi
+fi; fi; fi; fi; fi;
+
 
 #Generate list of arguments
 shift
