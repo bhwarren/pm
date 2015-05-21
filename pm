@@ -57,7 +57,7 @@ which apt-get > /dev/null 2>&1
 if [ "$?" -eq 0 ];then 
 	pkgMngr="apt + dpkg"
 	myinstall="apt-get install"
-	myremove="apt-get remove --purge && apt-get autoremove"
+	myremove="apt-get autoremove"
 	myremovefile="dpkg -r"
 	myupdate="apt-get update && apt-get upgrade"
 	myupgrade="apt-get update && apt-get dist-upgrade"
