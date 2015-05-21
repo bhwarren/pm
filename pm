@@ -174,7 +174,7 @@ if [ `id -u` -ne 0 ];then #-a "$cmd" != "search" ]; then
 	myinstall="$pre $myinstall"
 	myremove="$pre $myremove"
 	myupdate="$pre $myupdate"
-	if [ $myupdate2 != "" ];then
+	if [ "$myupdate2" != "" ];then
 		myupdate="$myupdate;$pre $myupdate2"
 	fi
 	myupgrade="$pre $myupgrade"
