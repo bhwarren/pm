@@ -59,7 +59,8 @@ if [ "$?" -eq 0 ];then
 	myinstall="apt-get install"
 	myremove="apt-get autoremove"
 	myremovefile="dpkg -r"
-	myupdate="apt-get update && apt-get upgrade"
+	myupdate="apt-get update"
+	myupdate2="apt-get upgrade"
 	myupgrade="apt-get update && apt-get dist-upgrade"
 	myrepos="apt-get update"
 	mysearch="apt-cache search"
@@ -173,6 +174,9 @@ if [ `id -u` -ne 0 ];then #-a "$cmd" != "search" ]; then
 	myinstall="$pre $myinstall"
 	myremove="$pre $myremove"
 	myupdate="$pre $myupdate"
+	if [ $myupdate2 != "" ];then
+		myupdate="$myupdate;$pre $myupdate2"
+	fi
 	myupgrade="$pre $myupgrade"
 	myrepos="$pre $myrepos"
 	myinstallfile="$pre $myinstallfile"
