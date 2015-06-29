@@ -171,23 +171,27 @@ lastarg=$i
 # Make sure only root can run this script
 if [ `id -u` -ne 0 ];then #-a "$cmd" != "search" ]; then
 	pre="sudo"
-	myinstall="$pre $myinstall"
-	myremove="$pre $myremove"
-	myupdate="$pre $myupdate"
-	if [ "$myupdate2" != "" ];then
-		myupdate="$myupdate;$pre $myupdate2"
-	fi
-	myupgrade="$pre $myupgrade"
-	myrepos="$pre $myrepos"
-	myinstallfile="$pre $myinstallfile"
-	mysearch="$pre $mysearch"
 fi
+
+myinstall="$pre $myinstall"
+myremove="$pre $myremove"
+myupdate="$pre $myupdate"
+if [ -z "$myupdate2" ];then
+	myupdate2="$pre $myupdate2"
+fi
+myupgrade="$pre $myupgrade"
+myrepos="$pre $myrepos"
+myinstallfile="$pre $myinstallfile"
+mysearch="$pre $mysearch"
+
+
+echo "Using $pkgMngr"
 
 #implement the actual actions
 case "$cmd" in
+
 	#install
 	"install" | "-I")
-		echo "Using $pkgMngr"
 
 		#check number of args
 		if [ $# -lt 1 ]; then 
@@ -207,24 +211,18 @@ case "$cmd" in
 
 	#update your packages
 	"update" | "-U")
-		echo "Using $pkgMngr"
 
+		#make sure repos are synced before updating
+		if [ -z "$myupdate2" ];then
+			myupdate="$myupdate;$pre $myupdate2"
+		fi
 		echo "starting full update"
 		sh -c "$myupdate $allopts"
 	;;
 
-	#upgrade your system 
-	#experimental, may cause breakages
-#	"upgrade" | "-U")
-#		echo "Using $pkgMngr"
-#
-#		echo "starting full upgrade"
-#		sh -c "$myupgrade $allopts"
-#	;;
 
 	#update the repositories 
 	"repositories" | "-r")
-		echo "Using $pkgMngr"
 
 		echo "updating the repositories"
 		sh -c "$myrepos"
@@ -232,7 +230,6 @@ case "$cmd" in
 
 	#uninstall a package
 	"remove" | "-R")
-		echo "Using $pkgMngr"
 
 		#check number of args
 		if [ $# -lt 1 ]; then 
@@ -260,7 +257,6 @@ case "$cmd" in
 
 	#search locally installed packages
 	"-ls" | "-sl")
-		echo "Using $pkgMngr"
 
 		if [ $# -gt 0 ];then
 			echo "searching locally installed packages"
