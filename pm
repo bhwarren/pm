@@ -176,7 +176,7 @@ fi
 myinstall="$pre $myinstall"
 myremove="$pre $myremove"
 myupdate="$pre $myupdate"
-if [ -z "$myupdate2" ];then
+if [ ! -z "$myupdate2" ];then
 	myupdate2="$pre $myupdate2"
 fi
 myupgrade="$pre $myupgrade"
@@ -213,7 +213,7 @@ case "$cmd" in
 	"update" | "-U")
 
 		#make sure repos are synced before updating
-		if [ -z "$myupdate2" ];then
+		if [ ! -z "$myupdate2" ];then
 			myupdate="$myupdate;$pre $myupdate2"
 		fi
 		echo "starting full update"
